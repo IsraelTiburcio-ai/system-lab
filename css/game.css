@@ -174,8 +174,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ============================================================
    GAMEPLAY
    ============================================================ */
-#screen-game { display: flex; flex-direction: column; min-height: 100dvh; padding-top: calc(var(--hud-h) + 8px); }
-#screen-game.is-active { animation: none; }
+#screen-game { display: none; flex-direction: column; min-height: 100dvh; padding-top: calc(var(--hud-h) + 8px); }
+#screen-game.is-active { display: flex; }
 
 .hud {
   position: fixed;
