@@ -396,6 +396,101 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .r-cell.r-score { border-color: rgba(56, 214, 255, 0.5); background: var(--cyan-soft); }
 .r-cell.r-score strong { color: #bff7ff; }
 
+.result-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.btn-sec {
+  padding: 10px 26px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text-1);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  transition: all 0.15s var(--ease);
+}
+.btn-sec:hover { color: var(--text-0); border-color: var(--cyan); box-shadow: 0 0 14px rgba(56, 214, 255, 0.25); }
+.btn-sec:active { transform: translateY(1px) scale(0.98); }
+
+/* ---------- Modal de respuestas ---------- */
+.answers-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(3, 5, 12, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fadeIn 0.25s ease both;
+}
+.answers-card {
+  width: min(500px, 100%);
+  max-height: min(82dvh, 560px);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, #131d38, #0b1226);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  animation: riseIn 0.35s var(--ease-back) both;
+  overflow: hidden;
+}
+.answers-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.answers-head h3 { font-family: var(--font-display); font-size: 0.95rem; letter-spacing: 0.06em; }
+.answers-close {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-1);
+  font-size: 0.95rem;
+}
+.answers-close:hover { color: var(--err); border-color: var(--err); }
+.answers-list { padding: 12px 16px; overflow-y: auto; display: grid; gap: 8px; }
+.ans-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  border: 1px solid;
+  background: var(--panel);
+  font-weight: 600;
+}
+.ans-row.ok { border-color: rgba(61, 220, 132, 0.4); background: rgba(61, 220, 132, 0.1); }
+.ans-row.bad { border-color: rgba(255, 107, 107, 0.45); background: rgba(255, 107, 107, 0.1); }
+.ans-num { font-family: var(--font-display); font-size: 0.7rem; color: var(--text-2); width: 20px; flex: none; }
+.ans-text { flex: 1; font-size: 1rem; }
+.ans-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid;
+}
+.ans-cat svg { width: 14px; height: 14px; }
+.ans-cat.c-objeto { border-color: rgba(56, 214, 255, 0.5); color: var(--cyan); background: var(--cyan-soft); }
+.ans-cat.c-sujeto { border-color: rgba(63, 232, 198, 0.5); color: var(--green); background: var(--green-soft); }
+.ans-cat.c-concepto { border-color: rgba(154, 123, 255, 0.55); color: var(--violet); background: var(--violet-soft); }
+.ans-mark { font-size: 1.05rem; font-weight: 900; width: 20px; text-align: center; flex: none; }
+.ans-row.ok .ans-mark { color: var(--ok); }
+.ans-row.bad .ans-mark { color: var(--err); }
+.answers-foot { padding: 12px 16px 16px; display: flex; justify-content: center; border-top: 1px solid var(--line); }
+
 /* ============================================================
    ANIMACIONES BASE
    ============================================================ */

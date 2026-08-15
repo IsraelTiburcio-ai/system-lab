@@ -305,6 +305,45 @@
     $("#best-cover").textContent = game.best;
   }
 
+  /* ---------- Respuestas de la partida ---------- */
+  function showAnswers() {
+    const rows = game.sequence.map((el, i) => {
+      const cat = CATS[el.category];
+      const ok = !!el._ok;
+      return `<div class="ans-row ${ok ? "ok" : "bad"}">
+        <span class="ans-num">${i + 1}</span>
+        <span class="ans-text">${el.text}</span>
+        <span class="ans-cat c-${el.category}">${ICONS[CAT_ICON[el.category]]}${cat.label}</span>
+        <span class="ans-mark" aria-hidden="true">${ok ? "✓" : "✗"}</span>
+      </div>`;
+    }).join("");
+
+    const overlay = document.createElement("div");
+    overlay.className = "answers-overlay";
+    overlay.innerHTML = `
+      <div class="answers-card" role="dialog" aria-modal="true" aria-label="Respuestas de la partida">
+        <div class="answers-head">
+          <h3>RESPUESTAS DE LA PARTIDA</h3>
+          <button class="answers-close" aria-label="Cerrar">✕</button>
+        </div>
+        <div class="answers-list">${rows}</div>
+        <div class="answers-foot">
+          <button class="btn-sec">Entendido</button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+
+    const close = () => {
+      overlay.remove();
+      document.removeEventListener("keydown", onKey, true);
+    };
+    const onKey = (e) => { if (e.key === "Escape") close(); };
+    overlay.querySelector(".answers-close").addEventListener("click", close);
+    overlay.querySelector(".answers-foot .btn-sec").addEventListener("click", close);
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });
+    document.addEventListener("keydown", onKey, true);
+  }
+
   /* ---------- Audio ---------- */
   function renderSoundIcon() {
     const el = $("#sound-icon");
@@ -322,6 +361,7 @@
     $("#btn-play").addEventListener("click", () => { sfx.select(); startRound(); });
     $("#btn-again").addEventListener("click", () => { sfx.select(); startRound(); });
     $("#btn-sound").addEventListener("click", toggleSound);
+    $("#btn-answers").addEventListener("click", () => { sfx.select(); showAnswers(); });
 
     document.addEventListener("pointerdown", (e) => {
       const c = e.target.closest(".catcher");
