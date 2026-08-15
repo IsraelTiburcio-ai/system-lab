@@ -272,8 +272,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .elem.caught { animation: catchIn 0.24s var(--ease) forwards; border-color: var(--ok); }
 .elem.wrong { animation: wrongShake 0.42s ease forwards; border-color: var(--err); }
 .elem.escaped { animation: escapeDrop 0.35s ease forwards; }
-.elem .e-ico { width: 26px; height: 26px; flex: none; color: var(--cyan); }
-.elem .e-ico svg { width: 26px; height: 26px; }
 
 @keyframes catchIn { to { transform: translateX(-50%) scale(0.4); opacity: 0; } }
 @keyframes wrongShake {

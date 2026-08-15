@@ -170,7 +170,8 @@
     node.className = "elem";
     node.dataset.id = el.id;
     node.style.transform = "translateX(-50%) rotate(" + (Math.random() * 3 - 1.5) + "deg)";
-    node.innerHTML = icon(CAT_ICON[el.category] || "cube", "e-ico") + "<span>" + el.text + "</span>";
+    // Sin icono: la palabra debe pensar su categoría, no adivinarla por el dibujo.
+    node.innerHTML = "<span>" + el.text + "</span>";
     zone.appendChild(node);
 
     game.answered = false;
