@@ -15,6 +15,14 @@
   const SOUND_KEY = "systemcatch_sound";
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Persistence is optional: sandbox/private mode must not stop a game.
+  function readSaved(key) {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+  }
+  function writeSaved(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) { /* keep session state */ }
+  }
+
   /* ---------- Estado ---------- */
   const game = {
     phase: "cover",       // cover | playing | result
@@ -26,8 +34,8 @@
     correct: 0,
     answered: false,      // bloquea doble respuesta del elemento actual
     fallMs: DATA.fallMs,
-    sound: localStorage.getItem(SOUND_KEY) !== "off",
-    best: parseInt(localStorage.getItem(BEST_KEY) || "0", 10)
+    sound: readSaved(SOUND_KEY) !== "off",
+    best: parseInt(readSaved(BEST_KEY) || "0", 10)
   };
 
   /* ---------- Iconos (SVG originales) ---------- */
@@ -293,7 +301,7 @@
     const isRecord = game.score > game.best;
     if (isRecord) {
       game.best = game.score;
-      localStorage.setItem(BEST_KEY, String(game.best));
+      writeSaved(BEST_KEY, String(game.best));
     }
     $("#r-best").textContent = game.best + (isRecord ? " · ¡NUEVO RÉCORD!" : "");
     $("#r-best").style.color = isRecord ? "var(--ok)" : "";
@@ -352,7 +360,7 @@
   }
   function toggleSound() {
     game.sound = !game.sound;
-    localStorage.setItem(SOUND_KEY, game.sound ? "on" : "off");
+    writeSaved(SOUND_KEY, game.sound ? "on" : "off");
     renderSoundIcon();
     if (game.sound) sfx.select();
   }
