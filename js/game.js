@@ -14,6 +14,7 @@
   const BEST_KEY = "systemcatch_best";
   const SOUND_KEY = "systemcatch_sound";
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const resultsBridge = window.OptiLabResults ? window.OptiLabResults.create("system-lab") : { start() {}, complete() {}, cancel() {} };
 
   // Persistence is optional: sandbox/private mode must not stop a game.
   function readSaved(key) {
@@ -129,6 +130,7 @@
 
   /* ---------- Ronda ---------- */
   function startRound() {
+    resultsBridge.start();
     const pool = shuffle(DATA.elements);
     game.sequence = pool.slice(0, DATA.roundSize);
     game.index = 0;
@@ -308,6 +310,7 @@
     updateBestOnCover();
     sfx.finish();
     showScreen("result");
+    resultsBridge.complete({ reason: "completed", correct: game.correct, total, score: game.score });
   }
 
   function updateBestOnCover() {
